@@ -1,13 +1,15 @@
 #!/usr/bin/env python2
 
+import client
+
 class Ball:
-  posx = 0.0
-  posy = 0.0
+  posx = 200.0
+  posy = 45.0
 
-  speedx = 0.0
-  speedy = 0.0
+  speedx = 0.8
+  speedy = 0.2
 
-  speed = 1
+  speed = 10
 
   pixels = [(0,0), (-1,-1), (1,1), (1,-1), (-1,1)]
 
@@ -16,5 +18,5 @@ class Ball:
     self.posy += self.speedy*self.speed
 
   def getPixels(self):
-    return [(posx+x,posy+y) for x,y in pixels]
+    return [(int(self.posx+x),int(self.posy+y)) for x,y in self.pixels]
     
