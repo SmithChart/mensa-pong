@@ -58,17 +58,17 @@ while not won:
         bl.updatePos()
 
         # bounce p1 or p2
-        if ((p1.pos - s <= bl.pos.y and p1.pos + s >= bl.pos.y) or
-           (p2.pos - s <= bl.pos.y and p2.pos + s >= bl.pos.y)):
-            bl.speed.y = bl.speed.y * -1
+        if ((p1.pos - s <= bl.posy and p1.pos + s >= bl.posy) or
+           (p2.pos - s <= bl.posy and p2.pos + s >= bl.posy)):
+            bl.speedy = bl.speedy * -1
         # bounce top or bot
-        elif bl.pos.x <= 0 or bl.pos.x >= client.HEIGHT:
-            bl.speed.x = bl.speed.x * -1
+        elif bl.posx <= 0 or bl.posx >= client.HEIGHT:
+            bl.speedx = bl.speedx * -1
         # score p1
-        elif bl.pos.x <= 0:
+        elif bl.posx <= 0:
             p1.incScore()
         # score p2
-        elif bl.pos.y >= client.WIDTH:
+        elif bl.posy >= client.WIDTH:
             p2.incScore()
 
         if p1.score >= target or p2.score >= target:
