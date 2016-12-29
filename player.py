@@ -27,12 +27,12 @@ class Player:
         while not self._stop:
             (cs, addr) = ss.accept()
             self.connected = True
-            print "Connected"
+            print "Connected {}".format(self.port)
             while not self._stop:
                 c = cs.recv(1)
                 if(c == ''):
                     self.connected = False
-                    print "Disconnected"
+                    print "Disconnected {}".format(self.port)
                     break
                 if c == 'k':
                     self.pos -= self.inc
