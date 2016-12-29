@@ -65,6 +65,6 @@ class Player:
 
     def checkCollision(self, ball):
         if (self.pos - self.size) <= (ball.posy + ball.size) and (self.pos + self.size) >= (ball.posy - ball.size):
-            return true
-        return false
+            return True
+        return False
 
