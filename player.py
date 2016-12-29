@@ -32,6 +32,8 @@ class Player:
             (cs, addr) = ss.accept()
             self.connected = True
             print "Connected {}".format(self.port)
+            cs.send("Welcome to Mensa-Pong\r\n")
+            cs.send("Use 'j' and 'k' to play\r\n")
             while not self._stop:
                 c = cs.recv(1)
                 if(c == ''):
