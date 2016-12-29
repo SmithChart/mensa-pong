@@ -9,9 +9,9 @@ class Ball:
   speedx = 0.8
   speedy = 0.2
 
-  speed = 10
+  speed = 15
 
-  pixels = [(0,0), (-1,-1), (1,1), (1,-1), (-1,1)]
+  pixels = [(0,0), (-1,-1), (1,1), (1,-1), (-1,1), (0,1), (1,0), (0,-1), (-1,0)]
 
   def updatePos(self):
     self.posx += self.speedx*self.speed
