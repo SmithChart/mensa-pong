@@ -11,6 +11,7 @@ from ball import Ball
 from time import sleep
 import client
 import clearscreen
+import framebuffer
 
 cntdwn = 10
 won = False
@@ -30,7 +31,6 @@ def bar(pos, x):
 
 
 def draw():
-    clearscreen.clear()
     if won:
         # draw winner screen
         client.write(0, 0, 'Player 1: {0}'.format(p1.score))
@@ -38,20 +38,22 @@ def draw():
         sleep(10)
     else:
         # draw ball
-        p = [(x, y, 255) for x, y in bl.getPixels()]
-        client.set_pixels(p)
+        fb.drawRect(bl.posx-bl.size, bl.posy-bl.size, bl.size*2+1, bl.size*2+1)
         # draw scores?
         client.write(10, 0, "{}".format(p1.score))
         client.write(80, 0, "{}".format(p2.score))
 
         # draw bar
-        bar(p1.pos, 0)
-        bar(p2.pos, client.WIDTH - 1)
+        fb.drawRect(0, p1.pos-p1.size, 2, p1.size*2)
+        fb.drawRect(client.WIDTH-2, p2.pos-p2.size, 2, p2.size*2)
 
-        sleep(0.02)
+        fb.output()
+        sleep(0.1)
 
 
 try:
+    fb = framebuffer.Framebuffer(0,0, client)
+
     clearscreen.clear()
     # determine game state
     while not won:
@@ -75,6 +77,9 @@ try:
             client.write(0,0,'Game starts in {0}'.format(starting))
             starting -= 1
             sleep(0.5)
+        elif starting == 0:
+            clearscreen.clear()
+            starting = -1
         else:
             # game frame
             bl.updatePos()
