@@ -80,8 +80,7 @@ try:
             bl.updatePos()
 
             # bounce p1 or p2
-            if (bl.posx <= 2 and (p1.pos - s <= bl.posy and p1.pos + s >= bl.posy)) or \
-            (bl.posx >= client.WIDTH -2 and (p2.pos - s <= bl.posy and p2.pos + s >= bl.posy)):
+            if (bl.posx <= 2 and p1.checkCollision(bl)) or (bl.posx >= client.WIDTH -2 and p2.checkCollision(bl)):
                 bl.speedx = bl.speedx * -1.0
             # bounce top or bot
             elif bl.posy <= 0 or bl.posy >= client.HEIGHT:
