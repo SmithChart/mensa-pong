@@ -4,6 +4,8 @@
 https://stratum0.org/wiki/Mensadisplay
 """
 
+import sys
+sys.path.append("/home/chris/mensactrl/python")
 from player import Player
 from ball import Ball
 from time import sleep
@@ -46,7 +48,7 @@ def draw():
         bar(p1.pos, 0)
         bar(p2.pos, client.WIDTH - 1)
 
-        sleep(0.1)
+        sleep(0.02)
 
 
 try:
