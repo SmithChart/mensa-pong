@@ -3,6 +3,7 @@
 import socket
 from time import sleep
 import thread
+import ball
 
 class Player:
     "Mensadisplay-Pong Networking Layer"
@@ -18,6 +19,9 @@ class Player:
     port = 0
 
     score = 0
+
+    # size of the paddle, 5 pixel both up and down
+    size = 5
 
     def tcpserver(self):
         ss = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -56,3 +60,9 @@ class Player:
 
     def stop(self):
         self._stop = True
+
+    def checkCollision(self, ball):
+        if (self.pos - self.size) <= (ball.posy + ball.size) and (self.pos + self.size) >= (ball.posy - ball.size):
+            return true
+        return false
+
