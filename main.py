@@ -58,8 +58,14 @@ try:
             # show "waiting for player"
             #clearscreen.clear()
             client.write(0,0,'Waiting for players ...')
-            client.write(0,4, "Player 1: 'stty -icanon && netcat localhost 13371'")
-            client.write(0,5, "Player 2: 'stty -icanon && netcat localhost 13372'")
+            if p1.connected:
+                client.write(0, 4, "Player 1 connected                                ")
+            else:
+                client.write(0,4, "Player 1: 'stty -icanon && netcat localhost 13371'")
+            if p2.connected:
+                client.write(0, 5, "Player 2 connected                                ")
+            else:
+                client.write(0,5, "Player 2: 'stty -icanon && netcat localhost 13372'")
             starting = cntdwn
         elif starting > 0:
             # show "game starts in %d"

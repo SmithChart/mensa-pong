@@ -24,25 +24,27 @@ class Player:
         ss.bind(('0.0.0.0', self.port))
         ss.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         ss.listen(1)
-        (cs, addr) = ss.accept()
-        ss.close()
-        self.connected = True
-        print "Connected"
         while not self._stop:
-            c = cs.recv(1)
-            if(c == ''):
-                self.connected = False
-                print "Disconnected"
-                break
-            if c == 'k':
-                self.pos -= self.inc
-            if c == 'j':
-                self.pos += self.inc
-            if self.pos < self.pos_min:
-                self.pos = self.pos_min
-            if self.pos > self.pos_max:
-                self.pos = self.pos_max
-        cs.close()
+            (cs, addr) = ss.accept()
+            self.connected = True
+            print "Connected"
+            while not self._stop:
+                c = cs.recv(1)
+                if(c == ''):
+                    self.connected = False
+                    print "Disconnected"
+                    break
+                if c == 'k':
+                    self.pos -= self.inc
+                if c == 'j':
+                    self.pos += self.inc
+                if self.pos < self.pos_min:
+                    self.pos = self.pos_min
+                if self.pos > self.pos_max:
+                    self.pos = self.pos_max
+            cs.close()
+            self.connected = False
+        ss.close()
 
     def __init__(self, port):
         self.port = port
