@@ -33,13 +33,14 @@ class Framebuffer:
 
     def output(self):
         # create list of changes between both framebuffers
-        pixels = list()
-        for i in range(len(self._new)):
-            if self._new[i] != self._old:
-                xi = i % int(self._width)
-                yi = i / self._width
-                pixels.append((self._posx+xi, self._posy+yi, self._new[i]))
-        self._client.set_pixels(pixels)
-        self._old = self._new
+        self._client.blit(self._posx, self._posy, self._width, self._height, self._new)
+#        pixels = list()
+#        for i in range(len(self._new)):
+#            if self._new[i] != self._old:
+#                xi = i % int(self._width)
+#                yi = i / self._width
+#                pixels.append((self._posx+xi, self._posy+yi, self._new[i]))
+#        self._client.set_pixels(pixels)
+#        self._old = self._new
         self._new = self._newBuffer()
 
