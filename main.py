@@ -12,6 +12,7 @@ from time import sleep
 import client
 import clearscreen
 import framebuffer
+import wait
 
 cntdwn = 10
 won = False
@@ -33,52 +34,52 @@ def bar(pos, x):
 def draw():
     if won:
         # draw winner screen
-        client.write(0, 0, 'Player 1: {0}'.format(p1.score))
-        client.write(0, 1, 'Player 2: {0}'.format(p2.score))
+        fb.write(0, 0, 'Player 1: {0}'.format(p1.score))
+        fb.write(0, 1, 'Player 2: {0}'.format(p2.score))
+        fb.output()
         sleep(10)
     else:
         # draw ball
         fb.drawRect(bl.posx-bl.size, bl.posy-bl.size, bl.size*2+1, bl.size*2+1)
         # draw scores?
-        client.write(10, 0, "{}".format(p1.score))
-        client.write(80, 0, "{}".format(p2.score))
+        fb.write(10, 0, "{}".format(p1.score))
+        fb.write(80, 0, "{}".format(p2.score))
 
         # draw bar
         fb.drawRect(0, p1.pos-p1.size, 2, p1.size*2)
         fb.drawRect(client.WIDTH-2, p2.pos-p2.size, 2, p2.size*2)
 
         fb.output()
-        sleep(0.1)
+        wt.wait()
 
 
 try:
     fb = framebuffer.Framebuffer(0,0, client)
+    wt = wait.waiter(1.0/20.0)
 
-    clearscreen.clear()
     # determine game state
     while not won:
         # waiting for players
         if not p1.connected or not p2.connected:
             # show "waiting for player"
             #clearscreen.clear()
-            client.write(0,0,'Waiting for players ...')
+            fb.write(0,0,'Waiting for players ...')
             if p1.connected:
-                client.write(0, 4, "Player 1 connected                                ")
+                fb.write(0, 4, "Player 1 connected                                ")
             else:
-                client.write(0,4, "Player 1: 'stty -icanon && netcat localhost 13371'")
+                fb.write(0,4, "Player 1: 'stty -icanon && netcat localhost 13371'")
             if p2.connected:
-                client.write(0, 5, "Player 2 connected                                ")
+                fb.write(0, 5, "Player 2 connected                                ")
             else:
-                client.write(0,5, "Player 2: 'stty -icanon && netcat localhost 13372'")
+                fb.write(0,5, "Player 2: 'stty -icanon && netcat localhost 13372'")
+            fb.output()
             starting = cntdwn
         elif starting > 0:
             # show "game starts in %d"
-            clearscreen.clear()
-            client.write(0,0,'Game starts in {0}'.format(starting))
+            fb.write(0,0,'Game starts in {0}'.format(starting))
             starting -= 1
-            sleep(0.5)
+            fb.output()
         elif starting == 0:
-            clearscreen.clear()
             starting = -1
         else:
             # game frame
