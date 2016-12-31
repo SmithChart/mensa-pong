@@ -13,6 +13,11 @@ import client
 import clearscreen
 import framebuffer
 import wait
+import argparse
+
+parser = argparse.ArgumentParser()
+parser.add_argument("bindTo", help="The IP to bind the players to")
+args = parser.parse_args()
 
 cntdwn = 10
 won = False
@@ -20,8 +25,8 @@ starting = 0
 s = 5
 target = 10
 
-p1 = Player(13371)
-p2 = Player(13372)
+p1 = Player(13371, args.bindTo)
+p2 = Player(13372, args.bindTo)
 
 bl = Ball()
 
@@ -67,11 +72,11 @@ try:
             if p1.connected:
                 fb.write(0, 4, "Player 1 connected                                ")
             else:
-                fb.write(0,4, "Player 1: 'stty -icanon && netcat localhost 13371'")
+                fb.write(0,4, "Player 1: 'stty -icanon && netcat {} 13371'".format(args.bindTo))
             if p2.connected:
                 fb.write(0, 5, "Player 2 connected                                ")
             else:
-                fb.write(0,5, "Player 2: 'stty -icanon && netcat localhost 13372'")
+                fb.write(0,5, "Player 2: 'stty -icanon && netcat {} 13372'".format(args.bindTo))
             fb.output()
             starting = cntdwn
         elif starting > 0:

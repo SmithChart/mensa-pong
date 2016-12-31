@@ -14,7 +14,7 @@ class Player:
     pos_min = 0
     pos_max = 69
 
-    inc = 3
+    inc = 5
 
     port = 0
 
@@ -25,7 +25,7 @@ class Player:
 
     def tcpserver(self):
         ss = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        ss.bind(('0.0.0.0', self.port))
+        ss.bind((self._bind, self.port))
         ss.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         ss.listen(1)
         while not self._stop:
@@ -52,8 +52,9 @@ class Player:
             self.connected = False
         ss.close()
 
-    def __init__(self, port):
+    def __init__(self, port, bind):
         self.port = port
+        self._bind = bind
         thread.start_new_thread(self.tcpserver,())
         self._stop = False
 
