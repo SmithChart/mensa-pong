@@ -4,8 +4,11 @@
 https://stratum0.org/wiki/Mensadisplay
 """
 
+# hack to make loading of the mensadisplay-client possible
+# this assumes that this repo is checked out inside the mensadisplay-repository: https://gitli.stratum0.org/stratum0/mensactrl
 import sys
-sys.path.append("/home/chris/mensactrl/python")
+sys.path.append("../python/")
+
 from player import Player
 from ball import Ball
 from time import sleep
