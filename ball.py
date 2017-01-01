@@ -10,7 +10,7 @@ class Ball:
   posx = 200.0
   posy = 45.0
   # movement speed, multiplied onto the coordinates with every frame
-  speed = 15
+  speed = 4
 
   # in order to match the logic for the bar, size is added to the ball twice
   size = 1
