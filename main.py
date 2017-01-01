@@ -15,28 +15,35 @@ import framebuffer
 import wait
 import argparse
 
+# Get the IP to bind to
 parser = argparse.ArgumentParser()
 parser.add_argument("bindTo", help="The IP to bind the players to")
 args = parser.parse_args()
 
+# this stuff represents the game's state
 cntdwn = 10
 won = False
 starting = 0
 s = 5
 target = 10
 
+# Init objects on the canvas
 p1 = Player(13371, args.bindTo)
 p2 = Player(13372, args.bindTo)
-
 bl = Ball()
 
+# Init framebuffer and time-logic
+fb = framebuffer.Framebuffer(0,0, client)
+wt = wait.waiter(1.0/20.0)
 
-def bar(pos, x):
-    p = [(x, y, 255) for y in range(pos - s, pos + s)]
-    client.set_pixels(p)
+# this is a legacy-way to draw a players bar
+#def bar(pos, x):
+#    p = [(x, y, 255) for y in range(pos - s, pos + s)]
+#    client.set_pixels(p)
 
 
 def draw():
+    """Draws a frame of the game"""
     if won:
         # draw winner screen
         fb.write(0, 0, 'Player 1: {0}'.format(p1.score))
@@ -46,7 +53,7 @@ def draw():
     else:
         # draw ball
         fb.drawRect(bl.posx-bl.size, bl.posy-bl.size, bl.size*2+1, bl.size*2+1)
-        # draw scores?
+        # draw scores
         fb.write(10, 0, "{}".format(p1.score))
         fb.write(80, 0, "{}".format(p2.score))
 
@@ -58,10 +65,8 @@ def draw():
         wt.wait()
 
 
+# this is the main game-logic
 try:
-    fb = framebuffer.Framebuffer(0,0, client)
-    wt = wait.waiter(1.0/20.0)
-
     # determine game state
     while not won:
         # waiting for players
